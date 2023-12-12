@@ -86,10 +86,10 @@ class EpsSigSolver:
         self.F_list = None
         
         
-        
-    def __str__(self):
-        return f"EpsSigSolver:\n phase name: {self.phase_name}\n reference unitcell: {self.unitcell}\n symmetry:" +\
-               f"{self.symmetry}\n unit:{self.stress_unit}\n Stiffness:\n {self.Cij}\n  n ubis: {len(self.UBIs)}"
+  # yield error with python 2.7    
+  #  def __str__(self):
+  #      return f"EpsSigSolver:\n phase name: {self.phase_name}\n reference unitcell: {self.unitcell}\n symmetry:" +\
+  #             f"{self.symmetry}\n unit:{self.stress_unit}\n Stiffness:\n {self.Cij}\n  n ubis: {len(self.UBIs)}"
 
     # Load / save / update functions for parameters (from former eps_sig_solver.py)
     ########################################
