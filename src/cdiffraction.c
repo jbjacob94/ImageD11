@@ -221,7 +221,60 @@ void compute_xlylzl(double s[], double f[], double p[4], double r[9],
             xlylzl[i][j] = r[3 * j + 1] * v[1] + r[3 * j + 2] * v[2] + dist[j];
         } // enddo
     } // enddo
-} // end subroutine compute_xlylzl
+} // end subroutine compute_xlylz
+
+/* F2PY_WRAPPER_START
+    subroutine compute_xlylzl_xpos_variable(s,f,p,r,dist,xpos,xlylzl,n)
+!DOC compute_xlylzl_xpos_variable finds spot positions in the laboratory frame
+!DOC like compute_xlylzl but with an extra per-spot x-offset xpos
+!DOC s    = slow pixel position
+!DOC f    = fast pixel position
+!DOC p    = [s_cen, f_cen, s_size, f_size]
+!DOC r[9] = dot( transform.detector_rotation_matrix, flipmatrix )
+!DOC dist = [distancex, distancey, distancez]
+!DOC xpos = extra x-offset per spot, same length as s,f
+        intent(c) compute_xlylzl_xpos_variable
+        intent(c)
+        double precision, intent(in) :: s(n), f(n)
+        double precision, intent(in) :: p(4), r(9), dist(3), xpos(n)
+        double precision, intent(inout) :: xlylzl(n,3)
+        integer, intent(c,hide), depend(s) :: n
+        ! NOT threadsafe since xlylzl may be shared
+    end subroutine compute_xlylzl_xpos_variable
+F2PY_WRAPPER_END */
+void compute_xlylzl_xpos_variable(double s[], double f[], double p[4], double r[9],
+    double dist[3], double xpos[],
+    double xlylzl[][3], int n)
+{
+double s_cen, f_cen, s_size, f_size, v[3];
+int i, j;
+
+s_cen  = p[0];
+f_cen  = p[1];
+s_size = p[2];
+f_size = p[3];
+v[0]   = 0.0;
+
+if (NOISY) {
+printf("s_cen %f f_cen %f s_size %f f_size %f\n", s_cen, f_cen, s_size, f_size);
+for (j = 0; j < 3; j++)
+printf("dist[%d]=%f ", j, dist[j]);
+for (j = 0; j < 9; j++)
+printf("r[%d]=%f ", j, r[j]);
+printf("\n");
+}
+
+for (i = 0; i < n; i++) {
+/* Place on the detector plane accounting for centre and size */
+v[1] = (f[i] - f_cen) * f_size;
+v[2] = (s[i] - s_cen) * s_size;
+
+/* Apply flip and rotation, then add per-spot x-offset */
+xlylzl[i][0] = r[3 * 0 + 1] * v[1] + r[3 * 0 + 2] * v[2] + dist[0] - xpos[i];
+xlylzl[i][1] = r[3 * 1 + 1] * v[1] + r[3 * 1 + 2] * v[2] + dist[1];
+xlylzl[i][2] = r[3 * 2 + 1] * v[1] + r[3 * 2 + 2] * v[2] + dist[2];
+}
+} /* end subroutine compute_xlylzl_xpos_variable */
 
 /* F2PY_WRAPPER_START
     subroutine quickorient( ubi, bt )
