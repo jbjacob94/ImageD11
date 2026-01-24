@@ -96,7 +96,7 @@ def compute_xyz_lab(
     o12=0.0,
     o21=0.0,
     o22=-1.0,
-    **kwds,
+    **kwds
 ):
     """
     Peaks is a 2 d array of x,y
@@ -167,7 +167,7 @@ def compute_tth_eta(
     omega=None,  # == phi at chi=90
     wedge=0.0,  # Wedge == theta on 4circ
     chi=0.0,  # == chi - 90
-    **kwds,
+    **kwds
 ):  # spare args are ignored
     """
     Finds x,y,z co-ordinates of peaks in the laboratory frame
@@ -208,7 +208,7 @@ def compute_tth_eta_from_xyz(
     #       == phi at chi=90
     wedge=0.0,  # Wedge == theta on 4circ
     chi=0.0,  # == chi - 90
-    **kwds,
+    **kwds
 ):  # last line is for laziness -
     """
     Peaks is a 3 d array of x,y,z peak co-ordinates
@@ -287,7 +287,7 @@ def compute_xyz_from_tth_eta(
     #       == phi at chi=90
     wedge=0.0,  # Wedge == theta on 4circ
     chi=0.0,  # == chi - 90
-    **kwds,
+    **kwds
 ):  # last line is for laziness -
     """
     Given the tth, eta and omega, compute the xyz on the detector

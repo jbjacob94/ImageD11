@@ -41,13 +41,13 @@ class test_g_to_k(unittest.TestCase):
                                                pre = np.eye(3),
                                                post = np.eye(3) )
 
-        c0 = np.cos(transform.radians(self.omega))
-        c1 = np.cos(transform.radians(sol1))
-        c2 = np.cos(transform.radians(sol2))
+        c0 = np.cos(np.radians(self.omega))
+        c1 = np.cos(np.radians(sol1))
+        c2 = np.cos(np.radians(sol2))
 
-        s0 = np.sin(transform.radians(self.omega))
-        s1 = np.sin(transform.radians(sol1))
-        s2 = np.sin(transform.radians(sol2))
+        s0 = np.sin(np.radians(self.omega))
+        s1 = np.sin(np.radians(sol1))
+        s2 = np.sin(np.radians(sol2))
 
         err1 = np.absolute(c1-c0) + np.absolute(s1-s0)
         err2 = np.absolute(c2-c0) + np.absolute(s2-s0)
@@ -73,13 +73,13 @@ class test_g_to_k(unittest.TestCase):
                                                pre = None,
                                                post = post )
 
-        c0 = np.cos(transform.radians(self.omega))
-        c1 = np.cos(transform.radians(sol1))
-        c2 = np.cos(transform.radians(sol2))
+        c0 = np.cos(np.radians(self.omega))
+        c1 = np.cos(np.radians(sol1))
+        c2 = np.cos(np.radians(sol2))
 
-        s0 = np.sin(transform.radians(self.omega))
-        s1 = np.sin(transform.radians(sol1))
-        s2 = np.sin(transform.radians(sol2))
+        s0 = np.sin(np.radians(self.omega))
+        s1 = np.sin(np.radians(sol1))
+        s2 = np.sin(np.radians(sol2))
 
         err1 = np.absolute(c1-c0) + np.absolute(s1-s0)
         err2 = np.absolute(c2-c0) + np.absolute(s2-s0)
@@ -106,13 +106,13 @@ class test_g_to_k(unittest.TestCase):
                                                pre = None,
                                                post = post )
 
-        c0 = np.cos(transform.radians(self.omega))
-        c1 = np.cos(transform.radians(sol1))
-        c2 = np.cos(transform.radians(sol2))
+        c0 = np.cos(np.radians(self.omega))
+        c1 = np.cos(np.radians(sol1))
+        c2 = np.cos(np.radians(sol2))
 
-        s0 = np.sin(transform.radians(self.omega))
-        s1 = np.sin(transform.radians(sol1))
-        s2 = np.sin(transform.radians(sol2))
+        s0 = np.sin(np.radians(self.omega))
+        s1 = np.sin(np.radians(sol1))
+        s2 = np.sin(np.radians(sol2))
 
         err1 = np.absolute(c1-c0) + np.absolute(s1-s0)
         err2 = np.absolute(c2-c0) + np.absolute(s2-s0)
@@ -140,13 +140,13 @@ class test_g_to_k(unittest.TestCase):
                                                pre = None,
                                                post = post )
 
-        c0 = np.cos(transform.radians(self.omega))
-        c1 = np.cos(transform.radians(sol1))
-        c2 = np.cos(transform.radians(sol2))
+        c0 = np.cos(np.radians(self.omega))
+        c1 = np.cos(np.radians(sol1))
+        c2 = np.cos(np.radians(sol2))
 
-        s0 = np.sin(transform.radians(self.omega))
-        s1 = np.sin(transform.radians(sol1))
-        s2 = np.sin(transform.radians(sol2))
+        s0 = np.sin(np.radians(self.omega))
+        s1 = np.sin(np.radians(sol1))
+        s2 = np.sin(np.radians(sol2))
 
         err1 = np.absolute(c1-c0) + np.absolute(s1-s0)
         err2 = np.absolute(c2-c0) + np.absolute(s2-s0)
