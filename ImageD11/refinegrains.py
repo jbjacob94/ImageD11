@@ -31,7 +31,7 @@ import xfab.tools
 
 # print(__file__)
 
-    
+
 
 
 def triclinic( cp ):
@@ -58,7 +58,7 @@ def tetragonal( cp ):
     """ a=b, c, 90,90,90 """
     a,b,c,al,be,ga = cp
     return [ (a+b)/2., (a+b)/2., c, 90., 90., 90. ]
-    
+
 def trigonalP( cp ):
     """ a=b=c, alpha=beta=gamma """
     a,b,c,al,be,ga = cp
@@ -70,35 +70,35 @@ def trigonalH( cp ):
     """ a=b,c, alpha=beta=90,gamma=120 """
     a,b,c,al,be,ga = cp
     anew = (a+b)/2.
-    return [ anew, anew, c, 90., 90., 120.] 
+    return [ anew, anew, c, 90., 90., 120.]
 
 hexagonal = trigonalH
 
 def cubic( cp ):
     """ a=b=c, alpha=beta=gamma=90 """
     anew = (cp[0]+cp[1]+cp[2])/3.
-    return [ anew, anew, anew, 90., 90., 90.] 
-    
+    return [ anew, anew, anew, 90., 90., 90.]
+
 
 def get_options(parser):
     parser.add_argument("-p",  "--parfile", action="store",
-                      dest="parfile", 
+                      dest="parfile",
                       type=ImageD11options.ParameterFileType(mode='r'),
                       help="Name of input parameter file")
     parser.add_argument("-u",  "--ubifile", action="store",
-                      dest="ubifile", 
+                      dest="ubifile",
                       type=ImageD11options.UbiFileType(mode='r'),
                       help="Name of ubi file")
     parser.add_argument("-U",  "--newubifile", action="store",
-                      dest="newubifile", 
+                      dest="newubifile",
                       type=ImageD11options.UbiFileType(mode='w'),
                       help="Name of new ubi file to output")
     parser.add_argument("-f",  "--fltfile", action="store",
-                      dest="fltfile", 
+                      dest="fltfile",
                       type=ImageD11options.ColumnFileType(mode='r'),
                       help="Name of flt file")
     parser.add_argument("-F",  "--newfltfile", action="store",
-                      dest="newfltfile", 
+                      dest="newfltfile",
                       type=ImageD11options.ColumnFileType(mode='w'),
                       help="Name of flt file containing unindexed peaks")
     lattices = ["cubic", "hexagonal", "trigonalH","trigonalP",
@@ -174,11 +174,11 @@ class refinegrains:
         'y_center'   : 0.2,
         'z_center'   : 0.2,
         'distance'   : 200.,
-        'tilt_y'     : transform.radians(0.1),
-        'tilt_z'     : transform.radians(0.1),
-        'tilt_x'     : transform.radians(0.1),
-        'wedge'      : transform.radians(0.1),
-        'chi'        : transform.radians(0.1),
+        'tilt_y'     : numpy.radians(0.1),
+        'tilt_z'     : numpy.radians(0.1),
+        'tilt_x'     : numpy.radians(0.1),
+        'wedge'      : numpy.radians(0.1),
+        'chi'        : numpy.radians(0.1),
         't_x' : 0.2,
         't_y' : 0.2,
         't_z' : 0.2,
@@ -432,7 +432,7 @@ class refinegrains:
                         float(self.parameterobj.parameters['wavelength']),
                         self.parameterobj.parameters['wedge'],
                         self.parameterobj.parameters['chi'])
-   
+
         else:
             thisgrain.omega_calc[:]=0
 
@@ -452,7 +452,7 @@ class refinegrains:
 
 
 
-        self.gv = numpy.ascontiguousarray(gv.T)            
+        self.gv = numpy.ascontiguousarray(gv.T)
         return
 
 
@@ -901,7 +901,7 @@ def lf( tth, eta ):
 def polarization( tth, eta, eta0=0, factor=1.0 ):
     """
     Effect of beam polarisation
-    
+
     Kahn, J. Appl. Cryst. (1982) 15, 330-337
     Azaroff Acta Cryst (1955) 8 701.
 
@@ -911,7 +911,7 @@ def polarization( tth, eta, eta0=0, factor=1.0 ):
     rtth= numpy.radians(tth)
     ctth = numpy.cos(rtth)
     P0 = 0.5 * (1 + ctth**2)                                      # eqn 13
-    Pprime = 0.5 * factor * numpy.cos(2*rho)*numpy.sin(rtth)**2   # eqn 14    
+    Pprime = 0.5 * factor * numpy.cos(2*rho)*numpy.sin(rtth)**2   # eqn 14
     P = P0 - Pprime                                               # eqn 15
     return P
 

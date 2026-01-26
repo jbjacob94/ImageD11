@@ -37,3 +37,7 @@ void compute_gv(double xlylzl[][3], double omega[], double omegasign,
 
 void compute_xlylzl(double s[], double f[], double p[4], double r[9],
                     double dist[3], double xlylzl[][3], int n);
+
+void compute_xlylzl_xpos_variable(double s[], double f[], double p[4], double r[9],
+    double dist[3], double xpos[],
+    double xlylzl[][3], int n);

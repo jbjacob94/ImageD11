@@ -60,17 +60,17 @@ PARAMETERS = [
           helpstring="detector tilt, right handed around z",
           vary=True,
           can_vary=True,
-          stepsize=transform.radians(0.1)),
+          stepsize=numpy.radians(0.1)),
      par('tilt_y', 0.0,
           helpstring="detector tilt, right handed around y",
           vary=True,
           can_vary=True,
-          stepsize=transform.radians(0.1)),
+          stepsize=numpy.radians(0.1)),
      par('tilt_x', 0.0,
           helpstring="detector tilt, right handed around x",
           vary=False,
           can_vary=True,
-          stepsize=transform.radians(0.1)),
+          stepsize=numpy.radians(0.1)),
      par('fit_tolerance', 0.05,
           helpstring="tolerance to decide which peaks to use",
           vary=False,
@@ -85,12 +85,12 @@ PARAMETERS = [
           helpstring="wedge, rotation around y under omega",
           vary=False,
           can_vary=True,
-          stepsize=transform.radians(0.1)),
+          stepsize=numpy.radians(0.1)),
      par('chi', 0.0,
           helpstring="wedge, rotation around x under omega",
           vary=False,
           can_vary=True,
-          stepsize=transform.radians(0.1)),
+          stepsize=numpy.radians(0.1)),
      par('cell__a' , 4.1569,
           helpstring="unit cell par, same units as wavelength",
           vary=False,
@@ -174,7 +174,7 @@ PARAMETERS = [
 
 class transformer:
     """
-    Handles the algorithmic, fitting and state information for 
+    Handles the algorithmic, fitting and state information for
     fitting parameters to give experimental calibrations
     """
     def __init__(self, parfile=None, fltfile=None):
@@ -212,7 +212,7 @@ class transformer:
     def setvars(self, varlist):
         """ set the things to refine """
         self.parameterobj.varylist = varlist
-    
+
     def setfiltered(self, colfile):
         """
         Set self.colfile as colfile
@@ -229,7 +229,7 @@ class transformer:
         if "spot3d_id" not in self.colfile.titles:
             self.colfile.addcolumn(list(range(self.colfile.nrows)),
                                     "spot3d_id")
-    
+
     def loadfiltered(self, filename):
         """
         Read in 3D peaks from peaksearch
@@ -293,14 +293,14 @@ class transformer:
     def compute_histo(self, colname):
         """ Compute the histogram over twotheta for peaks previous read in
         Filtering is moved to a separate function
-        
+
         colname is most-often "tth"
-        
+
         other parameters are set in the parameter object
         no_bins = number of bins
         weight_hist_intensities: True or False
             False: histogram by number of measured peaks
-            True: weight by peak intensities 
+            True: weight by peak intensities
         """
         if colname not in self.colfile.titles:
             raise Exception("Cannot find column " + colname)
@@ -349,7 +349,7 @@ class transformer:
     def gof(self, args):
         """ Compute how good is the fit of obs/calc peak positions in tth """
         self.applyargs(args)
-        # 
+        #
         if self.update_fitds:
             cell = unitcell.unitcell_from_parameters( self.parameterobj )
         # Here, pars is a dictionary of name/value pairs to pass to compute_tth_eta
@@ -459,7 +459,7 @@ class transformer:
         else:
             highest = limit
         w = pars['wavelength']
-        ds = 2 * numpy.sin(transform.radians(highest) / 2.) / w
+        ds = 2 * numpy.sin(numpy.radians(highest) / 2.) / w
         self.dslimit = ds
         self.unitcell = unitcell.unitcell(cell, lattice)
         # If the space group is provided use xfab for generate unique hkls
@@ -471,8 +471,8 @@ class transformer:
                 tths.append(2 * numpy.arcsin(w * self.theorypeaks[i][0] / 2.))
                 self.theoryds.append( self.theorypeaks[i][0] )
         else:
-            # HO:  I have removed this part as it seems redundant ringds also calls gethkls 
-            # JPW: It was not redundant. theorypeaks is not defined anywhere else and you 
+            # HO:  I have removed this part as it seems redundant ringds also calls gethkls
+            # JPW: It was not redundant. theorypeaks is not defined anywhere else and you
             #      can't write a g-vector file without it.
             self.theorypeaks = self.unitcell.gethkls(ds)
             self.unitcell.makerings(ds)
@@ -559,7 +559,7 @@ class transformer:
         order = numpy.argsort(tth)
         f.write("#  gx  gy  gz  xc  yc  ds  eta  omega  spot3d_id  xl  yl  zl\n")
         print(numpy.maximum.reduce(ome), numpy.minimum.reduce(ome))
-        ds = 2 * numpy.sin(transform.radians(tth / 2)) / pars["wavelength"]
+        ds = 2 * numpy.sin(numpy.radians(tth / 2)) / pars["wavelength"]
         fmt = "%f "*8 + "%d " + "%f "*3 + "\n"
         for i in order:
             f.write(fmt % (gx[i], gy[i], gz[i],

@@ -94,6 +94,15 @@ compute_gv = """computes scattering vectors given thr positions of the spot
 in the laboratory in xlylzl[npks], the omega rotation[npks], and
 the rest of the parameters (wedge,wvln,chi,t[3] and omegasign)
 """
+compute_xlylzl_xpos_variable = """finds spot positions in the laboratory frame
+like compute_xlylzl but with an extra per-spot x-offset xpos
+s    = slow pixel position
+f    = fast pixel position
+p    = [s_cen, f_cen, s_size, f_size]
+r[9] = dot( transform.detector_rotation_matrix, flipmatrix )
+dist = [distancex, distancey, distancez]
+xpos = extra x-offset per spot, same length as s,f
+"""
 computes_xlylzl = """finds spot positions in the laboratory frame
 using packed parameters that are more general
 s    = slow pixel position
@@ -308,6 +317,7 @@ __all__ = [
     "compress_duplicates",
     "compute_geometry",
     "compute_gv",
+    "compute_xlylzl_xpos_variable",
     "computes_xlylzl",
     "connectedpixels",
     "count_shared",
