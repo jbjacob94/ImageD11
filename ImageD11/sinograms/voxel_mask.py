@@ -306,8 +306,8 @@ class VoxelSinoMasker:
         self.omega_bins = omega_bins
         self.dty_partitions = dty_partitions
 
-        self.dty[:] = dty[peak_ordering]  # overwrite to save memory
-        self.omega[:] = omega[peak_ordering]  # overwrite to save memory
+        self.dty[:] = self.dty[peak_ordering]  # overwrite to save memory
+        self.omega[:] = self.omega[peak_ordering]  # overwrite to save memory
         self.sinomega = np.sin(np.radians(self.omega))
         self.cosomega = np.cos(np.radians(self.omega))
 
@@ -343,7 +343,7 @@ class VoxelSinoMasker:
             for key, value in peaks.items():
                 self.sort_by_partitions(value)
         else:
-            raise ValueError(f"Unsupported type: {type(peaks)}")
+            raise ValueError("Unsupported type: {}".format(type(peaks)))
 
     def _build_buffers(self, buffer_size):
         self.buffer_size = buffer_size
@@ -388,8 +388,8 @@ if __name__ == "__main__":
     frames_omega = np.arange(0, 360, omega_stepsize)
     unique_dty = np.arange(-0.4, 0.4, dty_stepsize)
 
-    print(f"Number of unique dty values: {len(unique_dty)}")
-    print(f"Number of frames per scan step: {len(frames_omega)}")
+    print("Number of unique dty values: {}".format(len(unique_dty)))
+    print("Number of frames per scan step: {}".format(len(frames_omega)))
 
     omega = []
     dty = []
@@ -423,8 +423,9 @@ if __name__ == "__main__":
     peak_selector = VoxelSinoMasker(omega, dty, dty_stepsize)
     peak_selector.partition()
 
-    print(f"Number of peaks: {n_peaks}")
-    print(f"Omega binsize: {peak_selector.omega_binsize}")
+    print("Number of peaks: {}".format(n_peaks))
+    print("Omega binsize: {}".format(peak_selector.omega_binsize))
+    print("Number of omega bins: {}".format(peak_selector.omega_bins))
 
     idx, ydist = peak_selector.mask(xi0, yi0, ystep, y0)
 
@@ -487,7 +488,9 @@ if __name__ == "__main__":
             idx, ydist = peak_selector.mask(ys[i], ys[j], ystep, y0)
     t2 = time.perf_counter()
     time_per_call_voxel_mask = (t2 - t1) / (len(ys) * len(ys))
-    print(f"Time per voxel_mask.get_voxel_idx() call: {time_per_call_voxel_mask}")
+    print(
+        "Time per voxel_mask.get_voxel_idx() call: {}".format(time_per_call_voxel_mask)
+    )
 
     # early warmup
     idx, ydist = pbp.get_voxel_idx(
@@ -515,9 +518,11 @@ if __name__ == "__main__":
 
     time_per_call_pbp = (t2 - t1) / (len(ys) * len(ys))
     print(
-        f"Time per ImageD11.sinograms.point_by_point.get_voxel_idx call: {time_per_call_pbp}"
+        "Time per ImageD11.sinograms.point_by_point.get_voxel_idx call: {}".format(
+            time_per_call_pbp
+        )
     )
 
-    print(f"Speedup: {time_per_call_pbp / time_per_call_voxel_mask:.1f} x")
+    print("Speedup: {:.1f} x".format(time_per_call_pbp / time_per_call_voxel_mask))
 
     plt.show()
