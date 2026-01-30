@@ -778,7 +778,7 @@ class TensorMap:
             # we have strain in crystal reference frame
             # rotate it into sample frame and return
             print('Rotating eps_crystal into sample frame')
-            eps_sample_map = tensor_sample_to_crystal(self.eps_crystal, self.U)
+            eps_sample_map = tensor_crystal_to_sample(self.eps_crystal, self.U)
             self.add_map('eps_sample', eps_sample_map)
             return eps_sample_map
         else:
